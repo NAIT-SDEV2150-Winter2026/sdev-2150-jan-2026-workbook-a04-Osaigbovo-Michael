@@ -1,3 +1,4 @@
+import ResourceItem from './resource-item.js';
 const template = document.createElement('template');
 template.innerHTML = `
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
@@ -10,52 +11,20 @@ template.innerHTML = `
           </div>
 
           <div class="list-group list-group-flush">
-            <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h2 class="h6 mb-1">Peer Tutoring Centre</h2>
-                <small>Academic</small>
-              </div>
-              <p class="mb-1 small text-body-secondary">Drop-in tutoring and study support.</p>
-              <small class="text-body-secondary">Building W, Room W101</small>
-            </button>
-
-            <button type="button" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h2 class="h6 mb-1">Counselling Services</h2>
-                <small>Wellness</small>
-              </div>
-              <p class="mb-1 small text-body-secondary">Confidential mental health supports.</p>
-              <small class="text-body-secondary">Virtual and in-person</small>
-            </button>
-
-            <button type="button" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h2 class="h6 mb-1">Student Awards and Bursaries</h2>
-                <small>Financial</small>
-              </div>
-              <p class="mb-1 small text-body-secondary">Funding options and application help.</p>
-              <small class="text-body-secondary">Student Services, Main Floor CAT</small>
-            </button>
-
-            <button type="button" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h2 class="h6 mb-1">IT Service Desk</h2>
-                <small>Tech</small>
-              </div>
-              <p class="mb-1 small text-body-secondary">Account access, Wi-Fi, BYOD support.</p>
-              <small class="text-body-secondary">Library</small>
-            </button>
           </div>
         </div>
       </section>
 `;
 
 class ResourceResults extends HTMLElement {
+    #resources = null;
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
 
-        this.resources = [
+        this.#resources = [
         {
+            active: true,
             id: 'tutoring',
             title: 'Peer Tutoring Centre',
             category: 'Academic',
@@ -98,14 +67,23 @@ class ResourceResults extends HTMLElement {
             contact: 'it@example.edu',
             virtual: false,
             openNow: true,
-        },
+        }, 
         ];
     }
 
     connectedCallback() {
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = '';
+        const el = template.content.cloneNode(true);
+        const fragment = document.createDocumentFragment();
+
+        for(const resources of this.#resources) {
+          const ri = new ResourceItem();
+          ri.data = resources;
+          fragment.appendChild(ri);
+        }
+        el.querySelector(".list-group").appendChild(fragment);
+        this.shadowRoot.appendChild(el);
     }
-}
+} 
 
 customElements.define('resource-results', ResourceResults);
