@@ -21,10 +21,9 @@ class ResourceItem extends HTMLElement {
     super();
     this.data = null;
     this.attachShadow({ mode: 'open' });
-  }
+  } 
   set data(obj){
     this.#data = obj;
-    this.renderResourceItem();
   }
 
   renderResourceItem() {
