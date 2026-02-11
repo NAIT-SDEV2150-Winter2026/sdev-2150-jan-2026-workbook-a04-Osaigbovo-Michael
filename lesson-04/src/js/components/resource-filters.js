@@ -53,6 +53,8 @@ class ResourceFilters extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     // TODO: Bind event handler methods
+    this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleButtonClick = this._handleButtonClick.bind(this);
   }
 
   // TODO: Manage lifecycle and events (i.e., connectedCallback, disconnectedCallback).
@@ -60,16 +62,52 @@ class ResourceFilters extends HTMLElement {
     this.render();
     // Step 2: On form submit, preventDefault, read values, and dispatch `resource-filters-changed`.
     // TODO: Add a submit listener to #frm-filter.
-    
+    this._formEl = this.shadowRoot.querySelector('#frm-filter');
+    this._formEl.addEventListener('submit', this._handleSubmit);
+
     // TODO: Add click listener to category buttons.
+    this._categoryGroupEl = this.shadoowRoot.querySelector('#category-buttons');
+    this._categoryGroupEl.addEventListener('click', this._handleButtonClick);
   }
-  
+
   // Step 2: Create submit handler method.
   // TODO: Build a filters object: { query, category, openNow, virtual }.
   // TODO: Dispatch a bubbling + composed CustomEvent('resource-filters-changed', { detail: filters }).
+  _handleSubmit(event) {
+    event.preventDefault();
+
+    const query = this.shadowRoot.querySelector('#q').ariaValueMax.toLowerCase().trim();
+    const categoryButton = this._categoryGroupEl.querySelector('.active') || this._categoryGroupEl.querySelector('button');
+    const category = categoryButton ? categoryButton.textContent.trim().toLowerCase() : 'all';
+    const openNow = this.querySelector('#openNow').checked;
+    const virtual = this.querySelector('#virtual').checked;
+
+    const filters = {
+      query,
+      category,
+      openNow,
+      virtual,
+    };
+
+    const filtersChange = new CustomEvent('resource-filters-changed', {
+      detail: { filters },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(filtersChange);
+  }
 
   // Step 2: Create category button click handler method.
   // TODO: Handle category button clicks to set active state.
+  _handleButtonClick(event) {
+    const selectedValue = event.target.closest('btn');
+
+    if (selectedValue) {
+      const activeValue = selectedValue.parentElement.querySelector('.active');
+      activeValue.classList.remove('active');
+      selectedValue.classList.add('active');
+    }
+  }
 
   render() {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
