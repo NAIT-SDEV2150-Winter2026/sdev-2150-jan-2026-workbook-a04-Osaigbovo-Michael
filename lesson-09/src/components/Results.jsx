@@ -1,4 +1,5 @@
 // src/components/Results.jsx 
+
 import ResultsItem from './ResultsItem';
 import { resources } from '../data/resources';
 import Card from './ui/Card';

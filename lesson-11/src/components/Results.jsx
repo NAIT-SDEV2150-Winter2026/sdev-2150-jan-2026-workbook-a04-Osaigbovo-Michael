@@ -1,11 +1,9 @@
-
+// src/components/Results.jsx
 import ResultsItem from './ResultsItem';
 import { resources } from '../data/resources';
 import Card from './ui/Card';
 
-export default function Results({selectedResource, onSelectResource, }) {
-  //const [selectedResource, setSelectedResource] = useState(null);
-
+export default function Results() {
   return (
     <Card title="Results">
       <ul className="divide-y divide-gray-200">
@@ -16,8 +14,6 @@ export default function Results({selectedResource, onSelectResource, }) {
             category={r.category}
             summary={r.summary}
             location={r.location}
-            onClick={() => onSelectResource(r)}
-            selected={selectedResource?.id === r.id}
           >
             {/* children: optional badge content */}
             {r.openNow && (

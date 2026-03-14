@@ -1,33 +1,11 @@
-//import { useState } from 'react';
 import Card from './ui/Card';
 
-export default function Filters({searchTerm, onSearchChange, selectedCategories, onCategoryToggle, openNowOnly, onOpenNowChange}) { 
-
-  function toggleCategory(category) {
-    onCategoryToggle((prev) => {
-      if (prev.includes(category)) {
-        return prev.filter((c) => c !== category);
-      }
-
-      return [...prev, category];
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    
-    if (!searchTerm.trim() && selectedCategories.lenght === 0 && !openNowOnly) {
-      alert('Please select at least one filter option.');
-      return;
-    }
-
-    console.log('Filters submitted');
-  }
-
+// src/components/Filters.jsx
+export default function Filters() {
   return (
     <Card title="Filters">
       <div className="space-y-4 p-4">
-        <form onSubmit={handleSubmit} id="frm-filter" className="space-y-4">
+        <form id="frm-filter" className="space-y-4">
           <div className="space-y-1">
             <label htmlFor="q" className="block text-sm font-medium text-gray-700">
               Search
@@ -37,13 +15,8 @@ export default function Filters({searchTerm, onSearchChange, selectedCategories,
               type="text"
               placeholder="Try: tutoring, mental health, bursary"
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200"
-              onChange={(e) => onSearchChange(e.target.value)}
-              value={searchTerm}
             />
           </div>
-          {/* <p className="text-sm text-base-content/70">
-            Searching for: {searchTerm}
-          </p> */}
 
           <hr className="border-gray-200" />
 
@@ -54,8 +27,7 @@ export default function Filters({searchTerm, onSearchChange, selectedCategories,
                 <button
                   key={label}
                   type="button"
-                  className={`${selectedCategories.includes(label) && 'bg-sky-600 text-white'} rounded border border-sky-600 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-50 hover:text-sky-900 focus:outline-none focus:ring-2 focus:ring-sky-200`}
-                  onClick={() => toggleCategory(label)}
+                  className="rounded border border-sky-600 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-50"
                 >
                   {label}
                 </button>
@@ -70,19 +42,16 @@ export default function Filters({searchTerm, onSearchChange, selectedCategories,
               <input
                 type="checkbox"
                 id="openNow"
-                className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600 accent-sky-600"
-                checked={openNowOnly}
-                onChange={(e) => onOpenNowChange(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
               Open now
             </label>
 
-            {/* Have students implement state for this checkbox */}
             <label className="flex items-center gap-2 text-sm text-gray-700">
               <input
                 type="checkbox"
                 id="virtual"
-                className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600 accent-sky-600"
+                className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
               Virtual options
             </label>
@@ -94,12 +63,6 @@ export default function Filters({searchTerm, onSearchChange, selectedCategories,
             <button
               type="button"
               className="rounded border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-              // First student exercise solution
-              // onClick={() => {
-              //   setSearchTerm('');
-              //   setSelectedCategories([]);
-              //   setOpenNowOnly(false);
-              // }}
             >
               Reset
             </button>
@@ -109,9 +72,6 @@ export default function Filters({searchTerm, onSearchChange, selectedCategories,
             >
               Filter
             </button>
-            {/* <p className="text-sm">
-              Open now only: {openNowOnly ? 'Yes' : 'No'}
-            </p> */}
           </div>
         </form>
       </div>
