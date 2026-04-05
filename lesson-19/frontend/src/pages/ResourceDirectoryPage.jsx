@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useResources } from '../hooks/useResources';
+import { useLoaderData } from 'react-router';
 import { useSelectedResource } from '../hooks/useSelectedResource';
 
 import Filters from '../components/Filters';
@@ -14,7 +14,7 @@ export default function ResourceDirectoryPage() {
   const [selectedResource, setSelectedResource] = useSelectedResource();
   const [virtualOnly, setVirtualOnly] = useState(false);
 
-  const { resources, isLoading, error, refetch } = useResources();
+  const { resources, isLoading, error, refetch } = useLoaderData();
 
   return (
     <>

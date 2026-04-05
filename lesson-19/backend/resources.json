@@ -2,7 +2,7 @@
   "resources": [
     {
       "id": "tutoring",
-      "title": "Peer Tutoring Centre",
+      "title": "Peer Learing Centre",
       "category": "Academic",
       "summary": "Drop-in tutoring and study support.",
       "location": "Building W, Room W101",
@@ -43,6 +43,28 @@
       "contact": "it@nait.ca",
       "virtual": false,
       "openNow": true
+    },
+    {
+      "id": "res_1774992879817_f9zrii",
+      "title": "power",
+      "category": "",
+      "summary": "",
+      "location": "",
+      "hours": "",
+      "contact": "",
+      "virtual": false,
+      "openNow": false
+    },
+    {
+      "id": "res_1774992901143_r899ka",
+      "title": "",
+      "category": "",
+      "summary": "",
+      "location": "",
+      "hours": "",
+      "contact": "",
+      "virtual": false,
+      "openNow": false
     }
   ]
 }
